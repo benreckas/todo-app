@@ -12,13 +12,22 @@
     </header>
     <main class="main-content">
       <form class="" name="addToDo" action="index.html" method="post">
-        <input type="text" name="" value="" class="list-input">
-        <button type="submit" name="submit">ADD TO-DO</button>
+        <input type="text" class="list-input">
+        <button type="submit" name="submit">ADD</button>
       </form>
       <ul class="todo-list">
-        <!-- List Items Generated Here -->
+        <!-- User Task Items Generated Here -->
+      </ul>
+      <ul class="completed-list">
+        <!-- Completed Tasks Here -->
       </ul>
     </main>
+    <div class="modal hidden">
+      <form class="" name="editToDo" action="index.html" method="post">
+        <input type="text" class="list-edit">
+        <button type="submit" name="submit">EDIT</button>
+      </form>
+    </div>
     <script src="js/scripts.js" type="text/javascript"></script>
   </body>
 </html>

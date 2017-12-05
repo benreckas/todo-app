@@ -1,3 +1,4 @@
+// Queries
 const userInput = document.querySelector('.list-input');
 const userEdit = document.querySelector('.list-edit');
 const modal = document.querySelector('.modal');

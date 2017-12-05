@@ -5,7 +5,7 @@ body {
 }
 
 header {
-  background-image: linear-gradient(-60deg, #ff5858 0%, #f09819 100%);
+  background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
   width: 100%;
   height: 100px;
   margin: 0;
@@ -27,10 +27,18 @@ main {
   margin: 50px auto;
 }
 
-input {
+form {
   width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.list-input {
+  width: 90%;
   height: 40px;
-  border-radius: 10px;
+  border: 1px solid black;
+  border-radius: 10px 0 0 10px;
   outline: none;
   padding: 0 10px;
   font-size: 3.2em;
@@ -38,9 +46,74 @@ input {
   font-weight: lighter;
 }
 
+button {
+  width: 10%;
+  font-weight: bolder;
+  height: 42px;
+  border: 1px solid black;
+  border-radius: 0 10px 10px 0;
+  font-size: 1.5em;
+  padding: 0;
+  margin-left: -1px;
+  background-image: linear-gradient(120deg, #fefefe 0%, #efefef 100%);
+}
+
 ul {
   list-style-type: none;
   font-family: sans-serif;
   font-weight: lighter;
   font-size: 1.6em;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* List Item Style*/
+
+.fa:hover {
+  cursor: pointer;
+}
+
+.fa-trash-o {
+  float: right;
+  color: red;
+  /*font-size: 2em;*/
+}
+
+.fa-trash-o:hover {
+  opacity: .7;
+}
+
+.fa-pencil {
+  color: green;
+  /*font-size: 2em;*/
+  margin-right: 20px;
+  float: right;
+}
+
+.fa-pencil:hover {
+  opacity: .7;
+}
+
+.fa-square-o, .fa-check-square-o {
+  float: left;
+  margin: 5px 20px 0 0;
+  /*font-size: 2em;*/
+}
+
+li {
+  margin-top: 20px;
+  width: 100%;
+  /*display: flex;
+  align-items: center;*/
+  font-size: 2em;
+}
+
+.strikethrough {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.hidden {
+  display: none;
 }

@@ -3,6 +3,7 @@
 body {
   margin: 0;
   padding: 0;
+  /* Set 1em = 10px*/
   font-size: 62.5%;
 }
 
@@ -18,10 +19,22 @@ header {
 
 h1 {
 margin: 0;
-/*text-transform: uppercase;*/
 font-family: sans-serif;
 color: white;
 font-size: 15em;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style-type: none;
+  font-family: sans-serif;
+  font-weight: lighter;
+  font-size: 1.6em;
+  margin: 0;
+  padding: 0;
 }
 
 main {
@@ -29,6 +42,7 @@ main {
   margin: 50px auto;
 }
 
+/* Form Styling */
 form {
   width: 100%;
   display: flex;
@@ -58,15 +72,6 @@ button {
   padding: 0;
   margin-left: -1px;
   background-image: linear-gradient(120deg, #fefefe 0%, #efefef 100%);
-}
-
-ul {
-  list-style-type: none;
-  font-family: sans-serif;
-  font-weight: lighter;
-  font-size: 1.6em;
-  margin: 0;
-  padding: 0;
 }
 
 /* Modal Style */

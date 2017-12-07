@@ -3,31 +3,39 @@
   <head>
     <meta charset="utf-8">
     <title>listr.</title>
-    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" sizes="144x144" href="images/favicon.png"> <!-- Favicon -->
+    <link rel="stylesheet" href="css/font-awesome-4.7.0/css/font-awesome.min.css"> <!-- Font Awesome -->
+    <link rel="stylesheet" href="css/style.css"> <!-- CSS Stylesheet -->
   </head>
   <body>
+    <!-- Header -->
     <header>
-      <h1>listr.</h1>
+      <a href="index.html"><h1>listr.</h1></a>
     </header>
+    <!-- Main Content -->
     <main class="main-content">
+      <!-- User Input for List -->
       <form class="" name="addToDo" action="index.html" method="post">
-        <input type="text" class="list-input">
+        <input type="text" class="list-input" autofocus>
         <button type="submit" name="submit">ADD</button>
       </form>
+      <!-- To-Do List -->
       <ul class="todo-list">
         <!-- User Task Items Generated Here -->
       </ul>
+      <!-- Completed List -->
       <ul class="completed-list">
-        <!-- Completed Tasks Here -->
+        <!-- Completed Tasks Moved Here -->
       </ul>
     </main>
+    <!-- Edit List Item Modal -->
     <div class="modal hidden">
       <form class="" name="editToDo" action="index.html" method="post">
         <input type="text" class="list-edit">
         <button type="submit" name="submit">EDIT</button>
       </form>
     </div>
+    <!-- Link to JavaScript -->
     <script src="js/scripts.js" type="text/javascript"></script>
   </body>
 </html>

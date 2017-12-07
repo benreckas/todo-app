@@ -1,3 +1,4 @@
+// Queries
 const userInput = document.querySelector('.list-input');
 const userEdit = document.querySelector('.list-edit');
 const modal = document.querySelector('.modal');
@@ -16,8 +17,9 @@ function Todo(li, check, uncheck, del, edit) {
   this.edit = edit;
 };
 
-
-const userSubmit = () => {
+// Listen for user submission on form input, push it's value to todoArr,
+// run the addLi function, and set the input field to empty
+const userSubmit = function() {
   forms.addToDo.submit.addEventListener('click', (e) => {
     e.preventDefault();
     const inputText = userInput.value;

@@ -1,23 +1,26 @@
 // Queries
-const userInput = document.querySelector('.list-input');
-const userEdit = document.querySelector('.list-edit');
-const editModal = document.querySelector('.edit-modal');
-const forms = document.forms;
-const todoList = document.querySelector('.todo-list');
-const completedList = document.querySelector('.completed-list');
-const todoArr = [];
-const completedArr = [];
+const userInput = document.querySelector('.list-input'); // To-Do Text Input
+const userEdit = document.querySelector('.list-edit'); // Edit Text Input
+const editModal = document.querySelector('.edit-modal'); // Edit Text Modal
+const forms = document.forms; // Input Form
+const todoList = document.querySelector('.todo-list'); // To-Do ul
+const completedList = document.querySelector('.completed-list'); // Completed ul
+const todoArr = []; // To-Do Arr
+const completedArr = []; // Completed Arr
 
+// li Constructor, takes in the li's textContent and adds necessary elements to item
 function Todo(str) {
   this.li = document.createElement('li');
   this.li.textContent = str;
   this.checkbox = document.createElement('i');
+  this.checked = document.createElement('i');
   this.editIcon = document.createElement('i');
   this.delIcon = document.createElement('i');
-  this.checkbox.classList.add("fa", "fa-square-o"); // Checkbox Icon
+  this.checkbox.classList.add("fa", "fa-square-o"); // Empty Checkbox Icon
+  this.checked.classList.add("fa", "fa-check-square-o", "hidden"); // Checked Box Icon
   this.editIcon.classList.add("fa", "fa-pencil"); // Pencil Icon
   this.delIcon.classList.add("fa", "fa-trash-o"); // Trash Icon
-  this.li.append(this.checkbox, this.delIcon, this.editIcon);
+  this.li.append(this.checkbox, this.checked, this.delIcon, this.editIcon);
 };
 
 // Listen for user submission on form input, push it's value to todoArr,
@@ -42,31 +45,19 @@ const addToDoLi = () => {
   todoList.append(createNewTask.li);
 };
 
-const completedLi = function() {
-  const li = document.createElement('li');
-  const delIcon = document.createElement('i');
-  const editIcon = document.createElement('i');
-  const checkbox = document.createElement('i');
-  li.classList.add("strikethrough");
-  delIcon.classList.add("fa", "fa-pencil", 'hidden');
-  editIcon.classList.add("fa", "fa-trash-o");
-  checkbox.classList.add("fa", "fa-check-square-o");
-  li.textContent = completedArr[completedArr.length - 1];
-  completedList.append(li);
-  li.append(checkbox, editIcon, delIcon);
+const completedLi = () => {
+  const str = completedArr[completedArr.length - 1];
+  const completedTask = new Todo(str);
+  completedTask.li.classList.add('strikethrough');
+  completedTask.checked.classList.remove('hidden');
+  completedTask.checkbox.classList.add('hidden');
+  completedList.append(completedTask.li);
 };
 
-const insertLi = function() {
-  const li = document.createElement('li');
-  const delIcon = document.createElement('i');
-  const editIcon = document.createElement('i');
-  const checkbox = document.createElement('i');
-  delIcon.classList.add("fa", "fa-pencil");
-  editIcon.classList.add("fa", "fa-trash-o");
-  checkbox.classList.add("fa", "fa-square-o");
-  li.textContent = todoArr[todoArr.length - 1];
-  todoList.insertBefore(li, todoList.firstChild);
-  li.append(checkbox, editIcon, delIcon);
+const insertLi = (targetLi) => {
+  const str = targetLi.textContent;
+  const editTask = new Todo(str);
+  todoList.insertBefore(editTask.li, todoList.firstChild);
 };
 
 const delTask = function (targetLi) {
@@ -98,7 +89,7 @@ const uncheckTask = function(targetLi) {
     }
   }
   todoArr.push(targetLi.textContent);
-  insertLi();
+  insertLi(targetLi);
 };
 
 const editTask = function(targetLi) {

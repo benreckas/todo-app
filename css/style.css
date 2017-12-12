@@ -74,12 +74,12 @@ button {
   background-image: linear-gradient(120deg, #fefefe 0%, #efefef 100%);
 }
 
-/* Modal Style */
+/* Modal Styles */
 
-.edit-modal {
+.edit-modal, .confirm-modal {
   width: 100%;
   height: 100%;
-  background-color: rgba(20, 20, 20, .6);
+  background-color: rgba(250, 250, 250, .8);
   z-index: 1;
   position: fixed;
   top: 0;
@@ -89,10 +89,23 @@ button {
   align-items: center;
 }
 
+.confirm-modal {
+  flex-wrap: wrap;
+  background-color: rgba(250, 100, 100, .5);
+}
+
 .edit-modal form {
   width: 80%;
 }
 
+.confirm-modal button {
+  border-radius: 10px;
+}
+
+.confirm-modal p {
+  font-size: 2em;
+  width: 100%;
+}
 
 /* List Item Style*/
 
@@ -102,7 +115,7 @@ button {
 
 .fa-trash-o {
   float: right;
-  color: red;
+  color: rgb(247,102,85);
   /*font-size: 2em;*/
 }
 
@@ -111,7 +124,7 @@ button {
 }
 
 .fa-pencil {
-  color: green;
+  color: rgb(158,218,227);
   /*font-size: 2em;*/
   margin-right: 20px;
   float: right;

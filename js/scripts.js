@@ -7,10 +7,11 @@ const todoList = document.querySelector('.todo-list'); // To-Do ul
 const completedList = document.querySelector('.completed-list'); // Completed ul
 const todoArr = []; // To-Do Arr
 const completedArr = []; // Completed Arr
-
 // Local Storage
 const todoArrStore = localStorage.getItem('todoArr');
 const completedArrStore = localStorage.getItem('completedArr');
+const todoParsed = JSON.parse(todoArrStore) || [];
+const completedParsed = JSON.parse(completedArrStore) || [];
 
 // li Constructor, takes in the li's textContent and adds necessary elements to item
 function Todo(str) {
@@ -198,9 +199,6 @@ const loadStorage = (arr) => {
   }
 };
 
-const todoParsed = JSON.parse(todoArrStore) || [];
-const completedParsed = JSON.parse(completedArrStore) || [];
-
 // Call Functions on Page Load
 userSubmit();
 loadStorage(todoParsed);
@@ -209,5 +207,84 @@ listListeners(document, 'click');
 
 
 
+// var todoLiDrag = todoList.querySelectorAll('li');
+// var completedLiDrag = todoList.querySelectorAll('li');
+//
+// const dragListeners = function(element, evt) {
+//   element.addEventListener(evt, (e) => {
+//     switch (element) {
+//       case "fa-trash-o": // Delete Icon
+//         delTask(targetLi);
+//         break;
+//       case "fa-square-o": // Empty Checkbox Icon
+//         checkTask(targetLi);
+//         break;
+//       case "fa-check-square-o": // Checked Box Icon
+//         uncheckTask(targetLi);
+//         break;
+//       case "fa-pencil": // Edit Icon
+//         editTask(targetLi);
+//         break;
+//     }
+//   });
+// };
+// dragListeners(document, 'click');
+//
+// var dragSrcEl = null;
+//
+// function handleDragStart(e) {
+//   this.style.opacity = '0.4';  // this / e.target is the source node.
+//
+//   dragSrcEl = this;
+//
+//   e.dataTransfer.effectAllowed = 'move';
+//   e.dataTransfer.setData('text/html', this.innerHTML);
+// }
+//
+// function handleDragOver(e) {
+//   if (e.preventDefault) {
+//     e.preventDefault(); // Necessary. Allows us to drop.
+//   }
+//   e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+//   return false;
+// };
+//
+// function handleDragEnter(e) {
+//   // this / e.target is the current hover target.
+//   this.classList.add('over');
+// };
+//
+// function handleDragLeave(e) {
+//   this.classList.remove('over');  // this / e.target is previous target element.
+// }
+//
+// function handleDrop(e) {
+//   // this / e.target is current target element.
+//
+//   if (e.stopPropagation) {
+//     e.stopPropagation(); // stops the browser from redirecting.
+//   }
+//
+//   // See the section on the DataTransfer object.
+//
+//   return false;
+// }
+//
+// function handleDragEnd(e) {
+//   // this/e.target is the source node.
+//
+//   [].forEach.call(todoLiDrag, function (todoLiDrag) {
+//     todoLiDrag.classList.remove('over');
+//   });
+// }
+//
+// [].forEach.call(todoLiDrag, function(todoLiDrag) {
+//   todoLiDrag.addEventListener('dragstart', handleDragStart, false);
+//   todoLiDrag.addEventListener('dragenter', handleDragEnter, false);
+//   todoLiDrag.addEventListener('dragover', handleDragOver, false);
+//   todoLiDrag.addEventListener('dragleave', handleDragLeave, false);
+//   todoLiDrag.addEventListener('drop', handleDrop, false);
+//   todoLiDrag.addEventListener('dragend', handleDragEnd, false);
+// });
 
 // Draggable li

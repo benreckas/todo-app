@@ -2,11 +2,13 @@
 const userInput = document.querySelector('.list-input'); // To-Do Text Input
 const userEdit = document.querySelector('.list-edit'); // Edit Text Input
 const editModal = document.querySelector('.edit-modal'); // Edit Text Modal
+const confirmModal = document.querySelector('.confirm-modal'); // Confirm Del Modal
 const forms = document.forms; // Input Form
 const todoList = document.querySelector('.todo-list'); // To-Do ul
 const completedList = document.querySelector('.completed-list'); // Completed ul
 const todoArr = []; // To-Do Arr
 const completedArr = []; // Completed Arr
+
 // Local Storage
 const todoArrStore = localStorage.getItem('todoArr');
 const completedArrStore = localStorage.getItem('completedArr');
@@ -27,54 +29,54 @@ function Todo(str) {
   this.editIcon.classList.add("fa", "fa-pencil"); // Pencil Icon
   this.delIcon.classList.add("fa", "fa-trash-o"); // Trash Icon
   this.li.append(this.checkbox, this.checked, this.delIcon, this.editIcon);
+  this.strike = () => {
+    this.li.classList.add('strikethrough');
+    this.checked.classList.remove('hidden');
+    this.checkbox.classList.add('hidden');
+    this.editIcon.classList.add('hidden');
+  };
 };
 
-// Remove item from Arr
-// const removeFromArr = (arr, targetLi) => {
-//   for(let i = 0; i <= arr.length; i++) {
-//     console.log(completedArr);
-//     if(arr[i] === targetLi.textContent) {
-//       arr.splice(i, 1)
-//       console.log(completedArr);
-//     }
-//   }
-// };
+// Remove item from a given array
+const removeFromArr = (arr, eval) => {
+  for(let i = 0; i <= arr.length; i++) {
+    if(arr[i] === eval) {
+      arr.splice(i, 1)
+    }
+  };
+};
 
-
-// Listen for user submission on form input, push it's value to todoArr,
-// run the addLi function, and set the input field to empty
-const userSubmit = function() {
+// Add user input to todo list
+const userSubmit = () => {
   forms.addToDo.submit.addEventListener('click', (e) => {
     e.preventDefault();
     const inputText = userInput.value;
     if(inputText.length > 1) {
       todoArr.push(inputText);
-      addToDoLi();
+      const str = inputText;
+      const createNewTask = new Todo(str);
+      todoList.append(createNewTask.li);
       userInput.value = "";
-    }
+    };
   });
 };
 
-// Add a new to-do item to the to-do ul
-const addToDoLi = () => {
-  const str = todoArr[todoArr.length - 1];
-  const createNewTask = new Todo(str);
-  todoList.append(createNewTask.li);
+// Check the box and run the function to move the li to the completed ul
+const checkTask = (targetLi) => {
+    removeFromArr(todoArr, targetLi.textContent);
+    todoList.removeChild(targetLi);
+    completedArr.push(targetLi.textContent);
+    const str = targetLi.textContent;
+    const completedTask = new Todo(str);
+    completedTask.strike();
+    completedList.append(completedTask.li);
 };
 
-// Check the box and move a to-do li to the completed ul
-const completedLi = () => {
-  const str = completedArr[completedArr.length - 1];
-  const completedTask = new Todo(str);
-  completedTask.li.classList.add('strikethrough');
-  completedTask.checked.classList.remove('hidden');
-  completedTask.checkbox.classList.add('hidden');
-  completedTask.editIcon.classList.add('hidden');
-  completedList.append(completedTask.li);
-};
-
-// Insert a previously completed li back to the to-do ul from the completed ul
-const insertLi = (targetLi) => {
+// Uncheck the box and re-insert the li back to the to-do ul
+const uncheckTask = (targetLi) => {
+  completedList.removeChild(targetLi);
+  removeFromArr(completedArr, targetLi.textContent);
+  todoArr.unshift(targetLi.textContent);
   const str = targetLi.textContent;
   const editTask = new Todo(str);
   todoList.insertBefore(editTask.li, todoList.firstChild);
@@ -82,84 +84,68 @@ const insertLi = (targetLi) => {
 
 // Delete a to-do or a completed li, prompt with a confirmation message
 const delTask = (targetLi) => {
-  const delConf = confirm("This will permenately delete the task.\nAre you sure you want to do this?");
-  if(delConf === true && targetLi.parentNode == todoList) {
-    todoList.removeChild(targetLi);
-    for(let i = 0; i <= todoArr.length; i++) {
-      if(todoArr[i] === targetLi.textContent) {
-        todoArr.splice(i, 1)
-      }
+  confirmModal.classList.remove('hidden');
+  forms.confirmDel.del.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (targetLi.parentNode === todoList) {
+      todoList.removeChild(targetLi);
+      confirmModal.classList.add('hidden');
+      removeFromArr(todoArr, targetLi.textContent);
+      return;
+    } else if (targetLi.parentNode === completedList) {
+      completedList.removeChild(targetLi);
+      confirmModal.classList.add('hidden');
+      removeFromArr(completedArr, targetLi.textContent);
+      return;
     }
-  }
-  else if(delConf === true && targetLi.parentNode == completedList) {
-    completedList.removeChild(targetLi);
-    for(let i = 0; i <= completedArr.length; i++) {
-      if(completedArr[i] === targetLi.textContent) {
-        completedArr.splice(i, 1)
-      }
-    }
-  }
-};
-
-// Check the box and run the function to move the li to the completed ul
-const checkTask = (targetLi) => {
-    todoList.removeChild(targetLi);
-    for(let i = 0; i <= todoArr.length; i++) {
-      if(todoArr[i] === targetLi.textContent) {
-        todoArr.splice(i, 1)
-      }
-    }
-    completedArr.push(targetLi.textContent);
-    completedLi();
-};
-
-// Uncheck the box and re-insert the li back to the to-do ul
-const uncheckTask = (targetLi) => {
-  completedList.removeChild(targetLi);
-  for(let i = 0; i <= completedArr.length; i++) {
-    if(completedArr[i] === targetLi.textContent) {
-      completedArr.splice(i, 1)
-    }
-  }
-  todoArr.unshift(targetLi.textContent);
-  insertLi(targetLi);
+  });
+  forms.confirmDel.cancel.addEventListener('click', (e) => {
+    e.preventDefault();
+    confirmModal.classList.add('hidden');
+    return;
+  });
 };
 
 // Edit a li, and reinsert it back to the to-do ul
-const editTask = function(targetLi) {
+const editTask = (targetLi) => {
   userEdit.setAttribute('placeholder', targetLi.textContent);
   editModal.classList.remove('hidden');
   forms.editToDo.submit.addEventListener('click', (e) => {
     e.preventDefault();
     if(userEdit.value.length === 0) {
-      targetLi.innerHTML = targetLi.innerHTML;
       editModal.classList.add('hidden');
       userEdit.value = '';
+      return;
     } else {
-      for(let i = 0; i <= todoArr.length; i++) {
+      for (let i = 0; i <= todoArr.length; i++) {
         if(todoArr[i] === targetLi.textContent) {
           todoArr.splice(i, 1, userEdit.value)
         }
-      }
-      targetLi.innerHTML = `${userEdit.value} <i class="fa fa-square-o"></i><i class="fa fa-trash-o"></i><i class="fa fa-pencil"></i>`;
+      };
+      const str = userEdit.value;
+      const appendedTask = new Todo(str);
+      targetLi.parentNode.replaceChild(appendedTask.li, targetLi);
       editModal.classList.add('hidden');
       userEdit.value = '';
+      return;
     }
   });
-  document.addEventListener('click', (e) => {
+  editModal.addEventListener('click', (e) => {
     if(e.target === editModal) {
       editModal.classList.add('hidden');
+      return;
     }
   });
 };
 
-window.onbeforeunload = function(){
+// Store the value of the ul's to local storage when page is closed or refreshed.
+window.onbeforeunload = () => {
   localStorage.setItem('todoArr', JSON.stringify(todoArr));
   localStorage.setItem('completedArr', JSON.stringify(completedArr));
-}
+};
 
 // Event Listeners
-const listListeners = function(element, evt) {
+const listListeners = (element, evt) => {
   element.addEventListener(evt, (e) => {
     const targetLi = e.target.parentNode;
     switch (e.target.classList[1]) {
@@ -175,13 +161,14 @@ const listListeners = function(element, evt) {
       case "fa-pencil": // Edit Icon
         editTask(targetLi);
         break;
-    }
+    };
   });
 };
 
+// Load local storage and populate lists on page load
 const loadStorage = (arr) => {
   for (let i = 0; i <= arr.length; i++) {
-    if (arr[i] !== undefined) {
+    if (arr[i] !== undefined && arr[i] !== null) {
       const str = arr[i];
       const storedList = new Todo(str);
       if (arr === todoParsed) {
@@ -189,10 +176,7 @@ const loadStorage = (arr) => {
         todoList.append(storedList.li)
       } else {
         completedArr.push(arr[i])
-        storedList.li.classList.add('strikethrough');
-        storedList.checked.classList.remove('hidden');
-        storedList.checkbox.classList.add('hidden');
-        storedList.editIcon.classList.add('hidden');
+        storedList.strike();
         completedList.append(storedList.li);
       }
     }
@@ -204,6 +188,34 @@ userSubmit();
 loadStorage(todoParsed);
 loadStorage(completedParsed);
 listListeners(document, 'click');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

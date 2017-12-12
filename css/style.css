@@ -91,20 +91,45 @@ button {
 
 .confirm-modal {
   flex-wrap: wrap;
-  background-color: rgba(250, 100, 100, .5);
+  background-color: rgba(255, 255, 255, 0);
 }
 
 .edit-modal form {
   width: 80%;
 }
 
-.confirm-modal button {
+.confirm-window button {
   border-radius: 10px;
+  width: 100px;
+}
+
+.confirm-window button:last-child {
+  margin-left: 20px;
+  background-color: rgba(247, 102, 85, .8);
 }
 
 .confirm-modal p {
-  font-size: 2em;
+  font-size: 1.5em;
   width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+}
+
+.confirm-window {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  height: 250px;
+  width: 500px;
+  border-radius: 10px;
+  border: 3px solid black;
+  background-color: rgba(255, 255, 255, .9);
 }
 
 /* List Item Style*/

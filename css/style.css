@@ -74,12 +74,12 @@ button {
   background-image: linear-gradient(120deg, #fefefe 0%, #efefef 100%);
 }
 
-/* Modal Style */
+/* Modal Styles */
 
-.modal {
+.edit-modal, .confirm-modal {
   width: 100%;
   height: 100%;
-  background-color: rgba(20, 20, 20, .6);
+  background-color: rgba(250, 250, 250, .8);
   z-index: 1;
   position: fixed;
   top: 0;
@@ -89,10 +89,63 @@ button {
   align-items: center;
 }
 
-.modal form {
+.confirm-modal {
+  flex-wrap: wrap;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.edit-modal form {
   width: 80%;
 }
 
+.confirm-window {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: center;
+  height: 150px;
+  width: 350px;
+  border-radius: 10px;
+  border: 3px solid black;
+  background-color: rgba(255, 255, 255, .9);
+}
+
+.confirm-window button {
+  border-radius: 10px;
+  width: 100px;
+  cursor: pointer;
+  background-image: none;
+  transition: all .4s;
+  border: 2px solid black;
+}
+
+.confirm-window button:last-child {
+  margin-left: 20px;
+  background-color: rgba(247, 102, 85, .6);
+}
+
+.confirm-window button:last-child:hover {
+  margin-left: 20px;
+  background-image: none;
+  background-color: rgba(247, 102, 85, .9);
+}
+
+.confirm-window button:first-child:hover {
+  background-color: rgba(200, 200, 200, .4);
+}
+
+.confirm-modal p {
+  font-size: 1.5em;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 20px;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  font-weight: lighter;
+}
 
 /* List Item Style*/
 
@@ -102,23 +155,20 @@ button {
 
 .fa-trash-o {
   float: right;
-  color: red;
-  /*font-size: 2em;*/
-}
-
-.fa-trash-o:hover {
-  opacity: .7;
+  color: rgb(247,102,85);
+  transition: all .4s;
 }
 
 .fa-pencil {
-  color: green;
-  /*font-size: 2em;*/
+  color: rgb(158,218,227);
   margin-right: 20px;
   float: right;
+  transition: all .4s;
 }
 
-.fa-pencil:hover {
+.fa-trash-o:hover, .fa-pencil:hover {
   opacity: .7;
+  transform: scale(1.1);
 }
 
 .fa-square-o, .fa-check-square-o {

@@ -106,7 +106,6 @@ const delTask = (targetLi) => {
   document.addEventListener('keypress', delBtn);
   // Continue to delete the task
   function delBtn(e) {
-    console.log(e);
     if(e.target === forms.confirmDel.del || e.keyCode === 13) {
       e.preventDefault();
       if (targetLi.parentElement === todoList) {
@@ -129,7 +128,7 @@ const delTask = (targetLi) => {
       confirmModal.classList.add('hidden');
       forms.confirmDel.del.removeEventListener('click', delBtn);
       forms.confirmDel.cancel.removeEventListener('click', cancelBtn);
-      forms.confirmDel.removeEventListener('keydown', delBtn);
+      document.removeEventListener('keypress', delBtn);
   };
 };
 

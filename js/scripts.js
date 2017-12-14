@@ -37,6 +37,11 @@ function Todo(str) {
   this.checked.classList.add("fa", "fa-check-square-o", "hidden"); // Checked Box Icon
   this.editIcon.classList.add("fa", "fa-pencil"); // Pencil Icon
   this.delIcon.classList.add("fa", "fa-trash-o"); // Trash Icon
+  // Mobile Friendly Icons
+  this.checkbox.setAttribute("onclick", "void(0)");
+  this.checked.setAttribute("onclick", "void(0)");
+  this.editIcon.setAttribute("onclick", "void(0)");
+  this.delIcon.setAttribute("onclick", "void(0)");
   // Append icons to the li
   this.li.append(this.checkbox, this.checked, this.delIcon, this.editIcon);
   // Optional function to check the box and strikethrough the text

@@ -14,6 +14,7 @@ const todoArrStore = localStorage.getItem('todoArr');
 const completedArrStore = localStorage.getItem('completedArr');
 const todoParsed = JSON.parse(todoArrStore) || [];
 const completedParsed = JSON.parse(completedArrStore) || [];
+
 // Store the value of the todoArr and completedArr to local storage when page is closed or refreshed.
 window.onbeforeunload = () => {
   localStorage.setItem('todoArr', JSON.stringify(todoArr));
@@ -97,27 +98,33 @@ const delTask = (targetLi) => {
   confirmModal.classList.remove('hidden');
   forms.confirmDel.del.addEventListener('click', delBtn);
   forms.confirmDel.cancel.addEventListener('click', cancelBtn);
-
+  document.addEventListener('keypress', delBtn);
+  // Continue to delete the task
   function delBtn(e) {
-    e.preventDefault();
-    if (targetLi.parentElement === todoList) {
-      todoList.removeChild(targetLi);
-      confirmModal.classList.add('hidden');
-      removeFromArr(todoArr, targetLi.textContent);
-    } else if (targetLi.parentElement === completedList) {
-      completedList.removeChild(targetLi);
-      confirmModal.classList.add('hidden');
-      removeFromArr(completedArr, targetLi.textContent);
-    }
-    forms.confirmDel.del.removeEventListener('click', delBtn);
-    forms.confirmDel.cancel.removeEventListener('click', cancelBtn);
+    console.log(e);
+    if(e.target === forms.confirmDel.del || e.keyCode === 13) {
+      e.preventDefault();
+      if (targetLi.parentElement === todoList) {
+        todoList.removeChild(targetLi);
+        confirmModal.classList.add('hidden');
+        removeFromArr(todoArr, targetLi.textContent);
+      } else if (targetLi.parentElement === completedList) {
+        completedList.removeChild(targetLi);
+        confirmModal.classList.add('hidden');
+        removeFromArr(completedArr, targetLi.textContent);
+      }
+      forms.confirmDel.del.removeEventListener('click', delBtn);
+      forms.confirmDel.cancel.removeEventListener('click', cancelBtn);
+      document.removeEventListener('keypress', delBtn);
+    };
   };
-
+  // Cancel the delete process
   function cancelBtn(e) {
       e.preventDefault();
       confirmModal.classList.add('hidden');
       forms.confirmDel.del.removeEventListener('click', delBtn);
       forms.confirmDel.cancel.removeEventListener('click', cancelBtn);
+      forms.confirmDel.removeEventListener('keydown', delBtn);
   };
 };
 
@@ -126,27 +133,32 @@ const editTask = (targetLi) => {
   userEdit.setAttribute('placeholder', targetLi.textContent);
   editModal.classList.remove('hidden');
   forms.editToDo.edit.addEventListener('click', editSubmit);
+  document.addEventListener('keypress', editSubmit);
+  // Take another user input and replace the existing task with a new one
   function editSubmit(e) {
-    e.preventDefault();
-    if(userEdit.value.length === 0) {
-      editModal.classList.add('hidden');
-    } else {
-      const str = userEdit.value;
-      const appendedTask = new Todo(str);
-      editModal.classList.add('hidden');
-      for (let i = 0; i <= todoArr.length; i++) {
-        if(todoArr[i] === targetLi.textContent) {
-          todoArr.splice(i, 1, str)
-        }
-      };
-      todoList.replaceChild(appendedTask.li, targetLi);
-      userEdit.value = '';
-    }
-    forms.editToDo.edit.removeEventListener('click', editSubmit);
+    if(e.target === forms.editToDo.edit || e.keyCode === 13) {
+      e.preventDefault();
+      if(userEdit.value.length === 0) {
+        editModal.classList.add('hidden');
+      } else {
+        const str = userEdit.value;
+        const appendedTask = new Todo(str);
+        editModal.classList.add('hidden');
+        for (let i = 0; i <= todoArr.length; i++) {
+          if(todoArr[i] === targetLi.textContent) {
+            todoArr.splice(i, 1, str)
+          }
+        };
+        todoList.replaceChild(appendedTask.li, targetLi);
+        userEdit.value = '';
+      }
+      forms.editToDo.edit.removeEventListener('click', editSubmit);
+      document.removeEventListener('keypress', editSubmit);
+    };
   };
 };
 
-// Event Listeners
+// Icon Event Listeners
 const iconListeners = (element, evt) => {
   element.addEventListener(evt, (e) => {
     const targetLi = e.target.parentElement;
